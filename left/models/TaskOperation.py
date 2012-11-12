@@ -7,7 +7,7 @@ class TaskOperation(models.Model):
     work_price  = models.FloatField(null=True)
     datetime    = models.DateTimeField()
     task        = models.ForeignKey('Task')
-    technic     = models.ForeignKey('Employee', related_name='technic_id')
+    technic     = models.ForeignKey('right.Employee', related_name='technic_id')
     state       = models.ForeignKey('TaskState')
     
     class Meta:

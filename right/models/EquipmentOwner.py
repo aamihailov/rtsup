@@ -6,7 +6,7 @@ from django.db import models
 class EquipmentOwner(models.Model):
     start_datetime  = models.DateTimeField()
     finish_datetime = models.DateTimeField(null=True)
-    equipment       = models.ForeignKey('Equipment')
+    equipment       = models.ForeignKey('left.Equipment')
     employee        = models.ForeignKey('Employee')
      
     class Meta:
