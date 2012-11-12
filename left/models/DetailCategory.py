@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 import settings as s
 
@@ -12,3 +13,9 @@ class DetailCategory(models.Model):
         app_label = 'left'
         db_table = 'detail_category'
     
+
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = DetailCategory
+    fields = ('id', 'name')

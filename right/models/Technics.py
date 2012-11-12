@@ -16,4 +16,4 @@ class Technics(models.Model):
 class Handler(BaseHandler):
     allowed_methods = ('PUSH','GET','PUT','DELETE')
     model  = Technics
-    fields = ('employee')
+    fields = ('id', 'employee')

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 # Операции с заявкой
 class TaskOperation(models.Model):
@@ -13,4 +14,11 @@ class TaskOperation(models.Model):
     class Meta:
         app_label = 'left'
         db_table  = 'task_operation'
+
+
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = TaskOperation
+    fields = ('id', 'work_price', 'datetime', 'task', 'technic', 'state')
     

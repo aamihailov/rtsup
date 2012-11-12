@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 import settings as s
 
@@ -15,3 +16,10 @@ class Equipment(models.Model):
     class Meta:
         app_label = 'left'
         db_table = 'equipment'
+
+
+
+class DetailModel(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = Equipment
+    fields = ('id', 'name', 'serial_number', 'addr', 'equipment_model', 'owner')

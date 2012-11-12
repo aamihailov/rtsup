@@ -16,4 +16,4 @@ class Admins(models.Model):
 class Handler(BaseHandler):
     allowed_methods = ('PUSH','GET','PUT','DELETE')
     model  = Admins
-    fields = ('employee')
+    fields = ('id', 'employee')

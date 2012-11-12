@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 import settings as s
 
@@ -15,4 +16,11 @@ class Repair(models.Model):
     class Meta:
         app_label = 'left'
         db_table = 'repair'
+
+
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = Repair
+    fields = ('id', 'comment', 'datetime', 'detail_model', 'equipment_operation', 'task')
     
