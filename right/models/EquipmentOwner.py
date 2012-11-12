@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 # Связь сотрудника и оборудования
 class EquipmentOwner(models.Model):
@@ -19,4 +20,12 @@ class EquipmentOwner(models.Model):
         return format % (self.id, self.start_datetime, self.finish_datetime, self.equipment.id, self.employee.id)
     
     def __unicode__(self):
-        return self.__str__()     
+        return self.__str__()
+    
+    
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = EquipmentOwner
+    fields = ('id', 'start_datetime', 'finish_datetime', 'equipment', 'employee')
+     

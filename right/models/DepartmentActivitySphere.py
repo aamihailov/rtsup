@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 import settings as s
 
@@ -11,3 +12,10 @@ class DepartmentActivitySphere(models.Model):
     class Meta:
         app_label = 'right'
         db_table = 'department_activity_sphere'
+
+
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = DepartmentActivitySphere
+    fields = ('id', 'name')

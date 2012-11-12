@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 # Операции с сотрудниками
 class EmployeeOperation(models.Model):
@@ -13,4 +14,10 @@ class EmployeeOperation(models.Model):
         app_label = 'right'
         db_table  = 'employee_operation'
     
-    
+
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = EmployeeOperation
+    fields = ('id', 'date', 'type', 'employee', 'department')
+            

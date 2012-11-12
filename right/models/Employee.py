@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
 import settings as s
 
@@ -23,4 +24,11 @@ class Employee(models.Model):
         return format % (self.id, self.name, self.snils, self.phone, self.login)
     
     def __unicode__(self):
-        return self.__str__()        
+        return self.__str__()
+    
+
+
+class Handler(BaseHandler):
+    allowed_methods = ('PUSH','GET','PUT','DELETE')
+    model  = Employee
+    fields = ('id', 'snils', 'name', 'phone', 'addr', 'login', 'password', 'role')
