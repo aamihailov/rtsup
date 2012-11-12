@@ -10,7 +10,7 @@ class EquipmentOwner(models.Model):
     employee        = models.ForeignKey('Employee')
      
     class Meta:
-        app_label = 'techsup_run'
+        app_label = 'right'
         db_table  = 'equipment_owner'
 #       unique_together = ('equipment', 'employee')
 

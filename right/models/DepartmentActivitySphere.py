@@ -9,5 +9,5 @@ class DepartmentActivitySphere(models.Model):
     name  = models.CharField(max_length=s.ACTIVITY_SPHERE_NAME_LENGTH, unique=True)
 
     class Meta:
-        app_label = 'techsup_run'
+        app_label = 'right'
         db_table = 'department_activity_sphere'

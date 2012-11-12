@@ -30,7 +30,7 @@ DATABASES = {
         'HOST': 'fpm2.ami.nstu.ru',
         'PORT': '',
         'OPTIONS': {
-            'options': '-c search_path=techsup'
+            'options': '-c search_path=_techsup_left'
         }
     },
     'students52_pg': {
@@ -41,11 +41,12 @@ DATABASES = {
         'HOST': 'fpm2.ami.nstu.ru',
         'PORT': '',
         'OPTIONS': {
-            'options': '-c search_path=techsup'
+            'options': '-c search_path=_techsup_right'
         }
     },
 }
 DATABASES['default'] = DATABASES['local_pg']
+DATABASE_ROUTERS = ['rtsup.router.LeftRightRouter']
 
 TIME_ZONE = 'Asia/Novosibirsk'
 

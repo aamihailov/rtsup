@@ -12,3 +12,9 @@ class DetailModel(models.Model):
     class Meta:
         app_label = 'right'
         db_table  = 'v_detail_model'
+
+    def save(self, *args, **kwargs):
+        return
+    
+    def delete(self, *args, **kwargs):
+        return
