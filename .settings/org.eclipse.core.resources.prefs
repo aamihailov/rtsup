@@ -11,6 +11,7 @@ encoding//left/models/Task.py=utf-8
 encoding//left/models/TaskOperation.py=utf-8
 encoding//left/models/TaskPriority.py=utf-8
 encoding//left/models/TaskState.py=utf-8
+encoding//left/models/special/LastTasks.py=utf-8
 encoding//left/models/special/StatisticsByTechnic.py=utf-8
 encoding//right/models/Admins.py=utf-8
 encoding//right/models/Department.py=utf-8

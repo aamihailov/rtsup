@@ -1,34 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from piston.handler import BaseHandler
 
-query = """
-SELECT id, name, priority, COUNT(*) as count
-FROM (
-    SELECT v_employee.id, v_employee.snils, v_employee.name,
-           tmp.task_id, tmp.priority_id,
-           task_priority.name AS priority
-    FROM _techsup_left.v_employee
-    RIGHT JOIN (
-        SELECT owner_id, task.id AS task_id, task.priority_id
-        FROM _techsup_left.task
-        WHERE id IN (
-            SELECT task_id
-            FROM _techsup_left.task_operation
-            WHERE task_operation.state_id = (
-                SELECT id
-                FROM _techsup_left.task_state
-                WHERE LOWER( task_state.name ) = 'закрыта'
-            )
-        )
-    ) AS tmp
-    ON v_employee.id = tmp.owner_id
-    RIGHT JOIN _techsup_left.task_priority
-    ON priority_id = task_priority.id
-) AS tmp1
-WHERE priority_id > 0 AND snils LIKE %s
-GROUP BY id, priority, name;
-"""
+query = open('common_data/requests/r01.sql').read()
 
 class SBTManager(models.Manager):
     def all(self):
@@ -56,3 +31,13 @@ class StatisticsByTechnic(models.Model):
     
     def __unicode__(self):
         return self.__str__()   
+    
+
+    
+class Handler(BaseHandler):
+    allowed_methods = ('GET',)
+    model  = StatisticsByTechnic
+    fields = ('id', 'name', 'priority', 'count')
+    
+    def read(self, request, snils):
+        return list( self.model.objects.filter(snils) )

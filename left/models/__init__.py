@@ -25,4 +25,4 @@ from TaskState              import Handler as TaskStateHandler
 from TaskOperation          import Handler as TaskOperationHandler
 
 
-from special import StatisticsByTechnic
+from special                import *

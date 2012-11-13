@@ -78,6 +78,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'rtsup.urls'
@@ -93,6 +94,7 @@ INSTALLED_APPS = (
     'left',
     'right',
     'django_extensions',
+    'debug_toolbar'
 )
 
 LOGGING = {
