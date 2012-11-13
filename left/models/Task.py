@@ -22,6 +22,6 @@ class Task(models.Model):
 
 class Handler(BaseHandler):
     allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = Repair
+    model  = Task
     fields = ('id', 'name', 'datetime', 'priority', 'client', 'owner', 'equipment')
     

@@ -16,7 +16,7 @@ class EquipmentModel(models.Model):
 
 
 
-class DetailModel(BaseHandler):
+class Handler(BaseHandler):
     allowed_methods = ('PUSH','GET','PUT','DELETE')
     model  = EquipmentModel
     fields = ('id', 'name', 'category')

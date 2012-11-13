@@ -19,7 +19,7 @@ class Equipment(models.Model):
 
 
 
-class DetailModel(BaseHandler):
+class Handler(BaseHandler):
     allowed_methods = ('PUSH','GET','PUT','DELETE')
     model  = Equipment
     fields = ('id', 'name', 'serial_number', 'addr', 'equipment_model', 'owner')

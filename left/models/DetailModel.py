@@ -16,7 +16,7 @@ class DetailModel(models.Model):
 
 
 
-class DetailModel(BaseHandler):
+class Handler(BaseHandler):
     allowed_methods = ('PUSH','GET','PUT','DELETE')
     model  = DetailModel
     fields = ('id', 'name', 'category')
