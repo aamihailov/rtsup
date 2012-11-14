@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 import settings as s
 
@@ -16,7 +17,10 @@ class DetailModel(models.Model):
 
 
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = DetailModel
-    fields = ('id', 'name', 'category')
+import DetailCategory
+class Handler( ModelResource ):
+    detail_category_url = fields.ForeignKey(DetailCategory.Handler, 'detail_category')
+    detail_category_id  = fields.IntegerField('detail_category_id')
+    class Meta:
+        queryset = DetailModel.objects.all()
+        resource_name = 'detail_model'

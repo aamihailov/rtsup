@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 import settings as s
 
@@ -15,8 +16,8 @@ class EquipmentOperationType(models.Model):
 
 
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = EquipmentOperationType
-    fields = ('id', 'name')
+class Handler( ModelResource ):
+    class Meta:
+        queryset = EquipmentOperationType.objects.all()
+        resource_name = 'equipment_operation_type'
     

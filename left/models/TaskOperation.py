@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 # Операции с заявкой
 class TaskOperation(models.Model):
@@ -17,8 +18,19 @@ class TaskOperation(models.Model):
 
 
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = TaskOperation
-    fields = ('id', 'work_price', 'datetime', 'task', 'technic', 'state')
+import Task
+from right.models import EmployeeHandler
+import TaskState
+class Handler( ModelResource ):
+    task_url = fields.ForeignKey(Task.Handler, 'task')
+    task_id  = fields.IntegerField('task_id')
+
+    technic_url = fields.ForeignKey(EmployeeHandler, 'technic')
+    technic_id  = fields.IntegerField('technic_id')
     
+    state_url = fields.ManyToManyField(TaskState.Handler, 'state')
+    state_id  = fields.IntegerField('state_id')
+    
+    class Meta:
+        queryset = TaskOperation.objects.all()
+        resource_name = 'task_operation'

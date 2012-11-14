@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 # Связь сотрудника и оборудования
 class EquipmentOwner(models.Model):
@@ -23,9 +24,16 @@ class EquipmentOwner(models.Model):
         return self.__str__()
     
     
+    
+import Employee
+from left.models import EquipmentHandler
+class Handler( ModelResource ):
+    employee_url  = fields.ForeignKey(Employee.Handler, 'employee')
+    employee_id   = fields.IntegerField('employee_id')
+    equipment_url = fields.ForeignKey(EquipmentHandler, 'equipment')
+    equipment_id  = fields.IntegerField('equipment_id')
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = EquipmentOwner
-    fields = ('id', 'start_datetime', 'finish_datetime', 'equipment', 'employee')
+    class Meta:
+        queryset = EquipmentOwner.objects.all()
+        resource_name = 'equipment_owner'
      

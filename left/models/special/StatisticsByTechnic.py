@@ -3,6 +3,8 @@
 from django.db import models
 from piston.handler import BaseHandler
 
+from django.db import connection
+
 query = open('common_data/requests/r01.sql').read()
 
 class SBTManager(models.Manager):
@@ -40,4 +42,5 @@ class Handler(BaseHandler):
     fields = ('id', 'name', 'priority', 'count')
     
     def read(self, request, snils):
-        return list( self.model.objects.filter(snils) )
+        return {'data' : list( self.model.objects.filter(snils) ),
+                'time' : connection.queries[-1]['time'] }

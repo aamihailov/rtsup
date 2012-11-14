@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 import settings as s
 
@@ -20,7 +21,11 @@ class Department(models.Model):
 
 
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = Department
-    fields = ('id', 'name', 'phone', 'email', 'addr', 'exists_now', 'activity_sphere')
+import DepartmentActivitySphere
+class Handler( ModelResource ):
+    department_activity_sphere_url = fields.ForeignKey(DepartmentActivitySphere.Handler, 'department_activity_sphere')
+    department_activity_sphere_id  = fields.IntegerField('department_activity_sphere_id')
+    
+    class Meta:
+        queryset = Department.objects.all()
+        resource_name = 'department'

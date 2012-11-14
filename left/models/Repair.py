@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 import settings as s
 
@@ -19,8 +20,17 @@ class Repair(models.Model):
 
 
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = Repair
-    fields = ('id', 'comment', 'datetime', 'detail_model', 'equipment_operation', 'task')
+import DetailModel
+import EquipmentOperation
+import Task
+class Handler( ModelResource ):
+    detail_model_url = fields.ForeignKey(DetailModel.Handler, 'detail_model')
+    detail_model_id  = fields.IntegerField('detail_model_id')
+    equipment_operation_url = fields.ForeignKey(EquipmentOperation.Handler, 'equipment_operation')
+    equipment_operation_id  = fields.IntegerField('equipment_operation_id')
+    task_url = fields.ForeignKey(Task.Handler, 'task')
+    task_id  = fields.IntegerField('task_id')
     
+    class Meta:
+        queryset = Repair.objects.all()
+        resource_name = 'repair'

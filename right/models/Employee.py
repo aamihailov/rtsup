@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 import settings as s
 
@@ -27,8 +28,12 @@ class Employee(models.Model):
         return self.__str__()
     
 
+import EmployeeRole
+class Handler( ModelResource ):
+    role_url = fields.ForeignKey  (EmployeeRole.Handler, 'role')
+    role_id  = fields.IntegerField('role_id')
+    
+    class Meta:
+        queryset = Employee.objects.all()
+        resource_name = 'employee'
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = Employee
-    fields = ('id', 'snils', 'name', 'phone', 'addr', 'login', 'password', 'role')

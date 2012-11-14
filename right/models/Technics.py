@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from piston.handler import BaseHandler
+from tastypie import fields
+from tastypie.resources import ModelResource
 
 # Техник
 class Technics(models.Model):
@@ -13,7 +14,11 @@ class Technics(models.Model):
     
 
 
-class Handler(BaseHandler):
-    allowed_methods = ('PUSH','GET','PUT','DELETE')
-    model  = Technics
-    fields = ('id', 'employee')
+import Employee
+class Handler( ModelResource ):
+    employee_url = fields.ForeignKey(Employee.Handler, 'employee')
+    employee_id  = fields.IntegerField('employee_id')
+
+    class Meta:
+        queryset = Technics.objects.all()
+        resource_name = 'technics'
