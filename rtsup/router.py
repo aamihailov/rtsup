@@ -3,16 +3,16 @@
 class LeftRightRouter(object):
     def db_for_read(self, model, **hints):
         if model._meta.app_label == 'left':
-            return 'students51_pg'
+            return 'local51_pg'
         elif model._meta.app_label == 'right':
-            return 'students52_pg'
+            return 'local52_pg'
         return None
 
     def db_for_write(self, model, **hints):
         if model._meta.app_label == 'left':
-            return 'students51_pg'
+            return 'local51_pg'
         elif model._meta.app_label == 'right':
-            return 'students52_pg'
+            return 'local52_pg'
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
@@ -20,9 +20,9 @@ class LeftRightRouter(object):
 
     def allow_syncdb(self, db, model):
         "Make sure the myapp app only appears on the 'other' db"
-        if db == 'students51_pg':
+        if db == 'local51_pg':
             return model._meta.app_label == 'left'
-        elif db == 'students52_pg':
+        elif db == 'local52_pg':
             return model._meta.app_label == 'right'
         elif model._meta.app_label == 'left':
             return False
