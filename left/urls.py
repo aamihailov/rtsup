@@ -22,11 +22,4 @@ left_rest_api.register(TaskOperationHandler())
 
 urlpatterns = patterns('',
     url(r'^', include(left_rest_api.urls)),
-
-    url( r'^statistics_by_technic/$', 
-         Resource(handler=StatisticsByTechnicHandler), {'snils':'%'} ),
-    url( r'^statistics_by_technic/(?P<snils>\d{3}-\d{3}-\d{3}\ \d{2})$', 
-         Resource(handler=StatisticsByTechnicHandler) ),
-
-    url( r'^last_tasks/$', Resource(handler=LastTasksHandler) ),
 )

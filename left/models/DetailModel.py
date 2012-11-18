@@ -19,8 +19,8 @@ class DetailModel(models.Model):
 
 import DetailCategory
 class Handler( ModelResource ):
-    detail_category_url = fields.ForeignKey(DetailCategory.Handler, 'detail_category')
-    detail_category_id  = fields.IntegerField('detail_category_id')
+    detail_category_url = fields.ForeignKey(DetailCategory.Handler, 'category')
+    detail_category_id  = fields.IntegerField('category_id')
     class Meta:
         queryset = DetailModel.objects.all()
         resource_name = 'detail_model'

@@ -26,12 +26,12 @@ class EquipmentOwner(models.Model):
     
     
 import Employee
-from left.models import EquipmentHandler
+#from left.models import EquipmentHandler
 class Handler( ModelResource ):
     employee_url  = fields.ForeignKey(Employee.Handler, 'employee')
     employee_id   = fields.IntegerField('employee_id')
-    equipment_url = fields.ForeignKey(EquipmentHandler, 'equipment')
-    equipment_id  = fields.IntegerField('equipment_id')
+#    equipment_url = fields.ForeignKey(EquipmentHandler, 'equipment')
+#    equipment_id  = fields.IntegerField('equipment_id')
 
     class Meta:
         queryset = EquipmentOwner.objects.all()
