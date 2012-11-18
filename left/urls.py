@@ -1,25 +1,19 @@
 from django.conf.urls import patterns, include, url
 
-from piston.resource import Resource
-
 from tastypie.api import Api
 
 from left.models import *
 
-left_rest_api = Api(api_name='rest')
-left_rest_api.register(DetailCategoryHandler())
-left_rest_api.register(DetailModelHandler())
-left_rest_api.register(EquipmentCategoryHandler())
-left_rest_api.register(EquipmentModelHandler())
-left_rest_api.register(EquipmentHandler())
-left_rest_api.register(EquipmentOperationTypeHandler())
-left_rest_api.register(EquipmentOperationHandler())
-left_rest_api.register(TaskPriorityHandler())
-left_rest_api.register(TaskHandler())
-left_rest_api.register(RepairHandler())
-left_rest_api.register(TaskStateHandler())
-left_rest_api.register(TaskOperationHandler())
-
-urlpatterns = patterns('',
-    url(r'^', include(left_rest_api.urls)),
-)
+api = Api(api_name='left')
+api.register(DetailCategoryHandler())
+api.register(DetailModelHandler())
+api.register(EquipmentCategoryHandler())
+api.register(EquipmentModelHandler())
+api.register(EquipmentHandler())
+api.register(EquipmentOperationTypeHandler())
+api.register(EquipmentOperationHandler())
+api.register(TaskPriorityHandler())
+api.register(TaskHandler())
+api.register(RepairHandler())
+api.register(TaskStateHandler())
+api.register(TaskOperationHandler())
