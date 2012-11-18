@@ -19,8 +19,8 @@ class EquipmentModel(models.Model):
 
 import EquipmentCategory
 class Handler( ModelResource ):
-    equipment_category_url = fields.ForeignKey(EquipmentCategory.Handler, 'equipment_category')
-    equipment_category_id  = fields.IntegerField('equipment_category_id')
+    equipment_category_url = fields.ForeignKey(EquipmentCategory.Handler, 'category')
+    equipment_category_id  = fields.IntegerField('category_id')
     
     class Meta:
         queryset = EquipmentModel.objects.all()
