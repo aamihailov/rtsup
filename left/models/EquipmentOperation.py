@@ -22,8 +22,8 @@ import EquipmentOperationType
 class Handler( ModelResource ):
     equipment_url = fields.ForeignKey(Equipment.Handler, 'equipment')
     equipment_id  = fields.IntegerField('equipment_id')
-    equipment_operation_type_url = fields.ForeignKey(EquipmentOperationType.Handler, 'equipment_operation_type')
-    equipment_operation_type_id  = fields.IntegerField('equipment_operation_type_id')
+    equipment_operation_type_url = fields.ForeignKey(EquipmentOperationType.Handler, 'eq_oper_type')
+    equipment_operation_type_id  = fields.IntegerField('eq_oper_type_id')
     
     class Meta:
         queryset = EquipmentOperation.objects.all()

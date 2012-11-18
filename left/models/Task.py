@@ -25,8 +25,8 @@ import TaskPriority
 from right.models import EmployeeHandler
 import Equipment
 class Handler( ModelResource ):
-    task_priority_url = fields.ForeignKey(TaskPriority.Handler, 'task_priority')
-    task_priority_id  = fields.IntegerField('task_priority_id')
+    task_priority_url = fields.ForeignKey(TaskPriority.Handler, 'priority')
+    task_priority_id  = fields.IntegerField('priority_id')
 
     client_url = fields.ForeignKey(EmployeeHandler, 'client')
     client_id  = fields.IntegerField('client_id')

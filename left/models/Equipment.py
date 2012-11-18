@@ -21,13 +21,9 @@ class Equipment(models.Model):
 
 
 import EquipmentModel
-from right.models import EmployeeHandler
 class Handler( ModelResource ):
     equipment_model_url = fields.ForeignKey(EquipmentModel.Handler, 'equipment_model')
     equipment_model_id  = fields.IntegerField('equipment_model_id')
-    
-    owner_urls          = fields.ManyToManyField(EmployeeHandler, 'owner__employee')
-    #owner_ids           = fields.IntegerField('equipment_model_id')
     
     class Meta:
         queryset = Equipment.objects.all()

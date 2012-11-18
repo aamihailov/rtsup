@@ -23,8 +23,8 @@ class Department(models.Model):
 
 import DepartmentActivitySphere
 class Handler( ModelResource ):
-    department_activity_sphere_url = fields.ForeignKey(DepartmentActivitySphere.Handler, 'department_activity_sphere')
-    department_activity_sphere_id  = fields.IntegerField('department_activity_sphere_id')
+    department_activity_sphere_url = fields.ForeignKey(DepartmentActivitySphere.Handler, 'activity_sphere')
+    department_activity_sphere_id  = fields.IntegerField('activity_sphere_id')
     
     class Meta:
         queryset = Department.objects.all()

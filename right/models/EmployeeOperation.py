@@ -21,10 +21,12 @@ import EmployeeOperationType
 import Employee
 import Department
 class Handler( ModelResource ):
-    employee_operation_type_url = fields.ForeignKey(EmployeeOperationType.Handler, 'employee_operation_type')
-    employee_operation_type_id  = fields.IntegerField('employee_operation_type_id')
+    employee_operation_type_url = fields.ForeignKey(EmployeeOperationType.Handler, 'type')
+    employee_operation_type_id  = fields.IntegerField('type_id')
+
     employee_url = fields.ForeignKey(Employee.Handler, 'employee')
     employee_id  = fields.IntegerField('employee_id')
+    
     department_url = fields.ForeignKey(Department.Handler, 'department')
     department_id  = fields.IntegerField('department_id')
 

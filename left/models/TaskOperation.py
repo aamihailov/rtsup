@@ -28,7 +28,7 @@ class Handler( ModelResource ):
     technic_url = fields.ForeignKey(EmployeeHandler, 'technic')
     technic_id  = fields.IntegerField('technic_id')
     
-    state_url = fields.ManyToManyField(TaskState.Handler, 'state')
+    state_url = fields.ForeignKey(TaskState.Handler, 'state')
     state_id  = fields.IntegerField('state_id')
     
     class Meta:
