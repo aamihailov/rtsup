@@ -22,6 +22,28 @@ DATABASES = {
             'options': '-c search_path=techsup'
         }
     },
+    'local51_pg': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'students51',                   
+        'USER': 'pmm8101',                   
+        'PASSWORD': 'retodarn',                
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {
+            'options': '-c search_path=_techsup_left'
+        }
+    },
+    'local52_pg': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'students52',                   
+        'USER': 'pmm8101',                   
+        'PASSWORD': 'retodarn',                
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {
+            'options': '-c search_path=_techsup_right'
+        }
+    },
     'students51_pg': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'students51',                   
