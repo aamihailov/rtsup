@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 # Операции с сотрудниками
 class EmployeeOperation(models.Model):
@@ -33,4 +33,8 @@ class Handler( ModelResource ):
     class Meta:
         queryset = EmployeeOperation.objects.all()
         resource_name = 'employee_operation'
+        
+        filtering = {
+             'date' : ALL,
+        }
             
