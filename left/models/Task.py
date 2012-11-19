@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -25,18 +25,28 @@ import TaskPriority
 from right.models import EmployeeHandler
 import Equipment
 class Handler( ModelResource ):
-    task_priority_url = fields.ForeignKey(TaskPriority.Handler, 'priority')
-    task_priority_id  = fields.IntegerField('priority_id')
+    priority      = fields.ForeignKey(TaskPriority.Handler, 'priority')
+    priority_id   = fields.IntegerField('priority_id')
 
-    client_url = fields.ForeignKey(EmployeeHandler, 'client')
-    client_id  = fields.IntegerField('client_id')
+    client        = fields.ForeignKey(EmployeeHandler, 'client')
+    client_id     = fields.IntegerField('client_id')
     
-    owner_url = fields.ForeignKey(EmployeeHandler, 'owner')
-    owner_id  = fields.IntegerField('owner_id')
+    owner         = fields.ForeignKey(EmployeeHandler, 'owner')
+    owner_id      = fields.IntegerField('owner_id')
     
-    owner_urls = fields.ManyToManyField(Equipment.Handler, 'equipment')
-    owner_ids  = fields.IntegerField('owner_id')
+    equipment     = fields.ManyToManyField(Equipment.Handler, 'equipment')
+    equipment_ids = fields.IntegerField('owner_id')
     
     class Meta:
         queryset = Task.objects.all()
         resource_name = 'task'
+
+    filtering = {
+        'id'        : ALL,
+        'name'      : ALL,
+        'datetime'  : ALL,
+        'priority'  : ALL_WITH_RELATIONS,
+        'client'    : ALL_WITH_RELATIONS,
+        'owner'     : ALL_WITH_RELATIONS,
+        'equipment' : ALL_WITH_RELATIONS,
+    }

@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -30,10 +30,20 @@ class Employee(models.Model):
 
 import EmployeeRole
 class Handler( ModelResource ):
-    role_url = fields.ForeignKey  (EmployeeRole.Handler, 'role')
+    role     = fields.ForeignKey  (EmployeeRole.Handler, 'role')
     role_id  = fields.IntegerField('role_id')
     
     class Meta:
         queryset = Employee.objects.all()
         resource_name = 'employee'
 
+        filtering = {
+             'id'     : ALL,
+             'snils'  : ALL,
+             'name'   : ALL,
+             'phone'  : ALL,
+             'addr'   : ALL,
+             'login'  : ALL,
+             'date'   : ALL,
+             'role'   : ALL_WITH_RELATIONS,
+        }

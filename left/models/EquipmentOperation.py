@@ -2,14 +2,14 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 # Операции с оборудованием
 class EquipmentOperation(models.Model):
     detail_price = models.FloatField(null=True)
     datetime     = models.DateTimeField()
     equipment    = models.ForeignKey('Equipment')
-    eq_oper_type = models.ForeignKey('EquipmentOperationType')
+    type         = models.ForeignKey('EquipmentOperationType')
     
     class Meta:
         app_label = 'left'
@@ -20,12 +20,20 @@ class EquipmentOperation(models.Model):
 import Equipment
 import EquipmentOperationType
 class Handler( ModelResource ):
-    equipment_url = fields.ForeignKey(Equipment.Handler, 'equipment')
+    equipment     = fields.ForeignKey(Equipment.Handler, 'equipment')
     equipment_id  = fields.IntegerField('equipment_id')
-    equipment_operation_type_url = fields.ForeignKey(EquipmentOperationType.Handler, 'eq_oper_type')
-    equipment_operation_type_id  = fields.IntegerField('eq_oper_type_id')
+    type          = fields.ForeignKey(EquipmentOperationType.Handler, 'type')
+    type_id       = fields.IntegerField('type_id')
     
     class Meta:
         queryset = EquipmentOperation.objects.all()
         resource_name = 'equipment_operation'
+
+    filtering = {
+        'id'          : ALL,
+        'detail_price': ALL,
+        'datetime'    : ALL,
+        'equipment'   : ALL_WITH_RELATIONS,
+        'type'        : ALL_WITH_RELATIONS,
+    }
     

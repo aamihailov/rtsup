@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 # Связь сотрудника и оборудования
 class EquipmentOwner(models.Model):
@@ -29,8 +29,19 @@ import Employee
 class Handler( ModelResource ):
     employee_url  = fields.ForeignKey(Employee.Handler, 'employee')
     employee_id   = fields.IntegerField('employee_id')
+    
+    equipment_id  = fields.IntegerField('equipment_id')
 
     class Meta:
         queryset = EquipmentOwner.objects.all()
         resource_name = 'equipment_owner'
+        
+    filtering = {
+             'id'               : ALL,
+             'start_datetime'   : ALL,
+             'finish_datetime'  : ALL,
+#             'equipment'        : ALL_WITH_RELATIONS,
+             'employee'         : ALL_WITH_RELATIONS,
+    }
+
      

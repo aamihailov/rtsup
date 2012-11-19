@@ -21,13 +21,13 @@ import EmployeeOperationType
 import Employee
 import Department
 class Handler( ModelResource ):
-    employee_operation_type_url = fields.ForeignKey(EmployeeOperationType.Handler, 'type')
-    employee_operation_type_id  = fields.IntegerField('type_id')
+    type = fields.ForeignKey(EmployeeOperationType.Handler, 'type')
+    type_id  = fields.IntegerField('type_id')
 
-    employee_url = fields.ForeignKey(Employee.Handler, 'employee')
+    employee = fields.ForeignKey(Employee.Handler, 'employee')
     employee_id  = fields.IntegerField('employee_id')
     
-    department_url = fields.ForeignKey(Department.Handler, 'department')
+    department = fields.ForeignKey(Department.Handler, 'department')
     department_id  = fields.IntegerField('department_id')
 
     class Meta:
@@ -35,6 +35,10 @@ class Handler( ModelResource ):
         resource_name = 'employee_operation'
         
         filtering = {
-             'date' : ALL,
+             'id'         : ALL,
+             'date'       : ALL,
+             'type'       : ALL_WITH_RELATIONS,
+             'employee'   : ALL_WITH_RELATIONS,
+             'department' : ALL_WITH_RELATIONS,
         }
             

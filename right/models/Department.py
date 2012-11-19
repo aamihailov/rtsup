@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -23,9 +23,19 @@ class Department(models.Model):
 
 import DepartmentActivitySphere
 class Handler( ModelResource ):
-    department_activity_sphere_url = fields.ForeignKey(DepartmentActivitySphere.Handler, 'activity_sphere')
-    department_activity_sphere_id  = fields.IntegerField('activity_sphere_id')
+    activity_sphere     = fields.ForeignKey(DepartmentActivitySphere.Handler, 'activity_sphere')
+    activity_sphere_id  = fields.IntegerField('activity_sphere_id')
     
     class Meta:
         queryset = Department.objects.all()
         resource_name = 'department'
+        
+    filtering = {
+             'id'                : ALL,
+             'name'              : ALL,
+             'phone'             : ALL,
+             'idemail'           : ALL,
+             'addr'              : ALL,
+             'exists_now'        : ALL,
+             'activity_sphere'   : ALL_WITH_RELATIONS,
+    }

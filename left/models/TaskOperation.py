@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 # Операции с заявкой
 class TaskOperation(models.Model):
@@ -22,15 +22,24 @@ import Task
 from right.models import EmployeeHandler
 import TaskState
 class Handler( ModelResource ):
-    task_url = fields.ForeignKey(Task.Handler, 'task')
+    task     = fields.ForeignKey(Task.Handler, 'task')
     task_id  = fields.IntegerField('task_id')
 
-    technic_url = fields.ForeignKey(EmployeeHandler, 'technic')
+    technic     = fields.ForeignKey(EmployeeHandler, 'technic')
     technic_id  = fields.IntegerField('technic_id')
     
-    state_url = fields.ForeignKey(TaskState.Handler, 'state')
+    state     = fields.ForeignKey(TaskState.Handler, 'state')
     state_id  = fields.IntegerField('state_id')
     
     class Meta:
         queryset = TaskOperation.objects.all()
         resource_name = 'task_operation'
+
+    filtering = {
+        'id'        : ALL,
+        'work_price': ALL,
+        'datetime'  : ALL,
+        'task'      : ALL_WITH_RELATIONS,
+        'technic'   : ALL_WITH_RELATIONS,
+        'state'     : ALL_WITH_RELATIONS,
+    }

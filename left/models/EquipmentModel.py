@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -19,9 +19,15 @@ class EquipmentModel(models.Model):
 
 import EquipmentCategory
 class Handler( ModelResource ):
-    equipment_category_url = fields.ForeignKey(EquipmentCategory.Handler, 'category')
-    equipment_category_id  = fields.IntegerField('category_id')
+    category     = fields.ForeignKey(EquipmentCategory.Handler, 'category')
+    category_id  = fields.IntegerField('category_id')
     
     class Meta:
         queryset = EquipmentModel.objects.all()
         resource_name = 'equipment_model'
+
+    filtering = {
+        'id'        : ALL,
+        'name'      : ALL,
+        'category'  : ALL_WITH_RELATIONS,
+    }

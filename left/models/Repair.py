@@ -2,7 +2,7 @@
 
 from django.db import models
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -24,13 +24,24 @@ import DetailModel
 import EquipmentOperation
 import Task
 class Handler( ModelResource ):
-    detail_model_url = fields.ForeignKey(DetailModel.Handler, 'detail_model')
+    detail_model     = fields.ForeignKey(DetailModel.Handler, 'detail_model')
     detail_model_id  = fields.IntegerField('detail_model_id')
-    equipment_operation_url = fields.ForeignKey(EquipmentOperation.Handler, 'equipment_operation')
+
+    equipment_operation     = fields.ForeignKey(EquipmentOperation.Handler, 'equipment_operation')
     equipment_operation_id  = fields.IntegerField('equipment_operation_id')
-    task_url = fields.ForeignKey(Task.Handler, 'task')
+
+    task     = fields.ForeignKey(Task.Handler, 'task')
     task_id  = fields.IntegerField('task_id')
     
     class Meta:
         queryset = Repair.objects.all()
         resource_name = 'repair'
+
+    filtering = {
+        'id'                    : ALL,
+        'comment'               : ALL,
+        'datetime'              : ALL,
+        'detail_model'          : ALL_WITH_RELATIONS,
+        'equipment_operation'   : ALL_WITH_RELATIONS,
+        'task'                  : ALL_WITH_RELATIONS,
+    }
