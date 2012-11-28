@@ -44,6 +44,5 @@ class Handler( ModelResource ):
              'phone'  : ALL,
              'addr'   : ALL,
              'login'  : ALL,
-             'date'   : ALL,
              'role'   : ALL_WITH_RELATIONS,
         }

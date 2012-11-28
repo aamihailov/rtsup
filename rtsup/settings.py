@@ -109,10 +109,17 @@ ROOT_URLCONF = 'rtsup.urls'
 WSGI_APPLICATION = 'rtsup.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/home/aamihailov/Documents/Aptana Studio 3 Workspace/techsup/techsup_run/templates',
+    '/home/aamihailov/Documents/Aptana Studio 3 Workspace/rtsup/templates',
+)
+
+STATIC_URL  = "/static/"
+STATIC_ROOT = "/home/aamihailov/Documents/Aptana Studio 3 Workspace/rtsup/static"
+STATICFILES_DIRS = (
+    "/home/aamihailov/Documents/Aptana Studio 3 Workspace/rtsup/media",
 )
 
 INSTALLED_APPS = (
+    'django.contrib.staticfiles',
     'left',
     'right',
     'django_extensions',

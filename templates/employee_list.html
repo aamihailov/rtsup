@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 id ="title" class="well">Список сотрудников в системе
+        <label class="checkbox">
+            <input id="working_now" type="checkbox"> Только работающих сейчас
+        </label>
+    </h2>
+    <table class="table table-striped">
+        <thead class="strong">
+            <tr> 
+                <th>#</th>
+                <th>СНИЛС</th>
+                <th>Полное имя</th>
+                <th>Телефон</th>
+                <th>Домашний адрес</th>
+            </tr>
+        </thead>
+        <tbody id = 'dataset'>
+        {% for e in employees %}
+        <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.snils }}</td>
+            <td>{{ e.name }}</td>
+            <td>{{ e.phone }}</td>
+            <td>{{ e.addr }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination pagination-centered">
+        <ul>
+            <li id="prev" class="enabled"><a href="#">Prev</a></li>
+            <li class="active"><a href="#" id="current">Отображены записи с # по # из #</a></li>
+            <li id="next" class="enabled"><a href="#">Next</a></li>
+        </ul>
+    </div>
+{% endblock content %}
+
+
+{% block userscript %}
+<script>
+    function clear_dataset( ) {
+        var Parent = $('#dataset')[0];
+        while ( Parent.hasChildNodes( ) ) {
+           Parent.removeChild( Parent.firstChild );
+        }
+    }
+    
+    function build_dataset( data ) {
+        return '<tr>'
+             +   '<td>' + data.id + '</td>'
+             +   '<td>' + data.snils + '</td>'
+             +   '<td>' + data.name + '</td>'
+             +   '<td>' + data.phone + '</td>'
+             +   '<td>' + data.addr + '</td>'
+             + '</tr>';
+    }
+    
+    function update_pager( ) {
+        $('#current').empty();
+        text = "Отображены записи с " + meta.offset + " по " + (meta.offset + meta.limit) + " из " + meta.total_count;
+        $('#current').append(text);
+        
+        if ( meta.next == null ) {
+            $('#next')[0].classList.add('disabled');
+        } else {
+            $('#next')[0].classList.remove('disabled');
+        }
+
+        if ( meta.previous == null ) {
+            $('#prev')[0].classList.add('disabled');
+        } else {
+            $('#prev')[0].classList.remove('disabled');
+        }
+    }
+
+    function rebuild_page( json ) {
+        meta    = json.meta;
+        clear_dataset( );
+        $.each(json.objects, function(){
+            $('#dataset').append(build_dataset(this));
+        });
+        update_pager();        
+    }
+    
+    $(document).ready(function(){                        
+        $('#prev').click(function(){
+            if ( meta.previous != null ) { 
+                $.getJSON(meta.previous, {}, function(json){    
+                    rebuild_page( json );
+                });                
+            }
+        });
+
+        $('#next').click(function(){                    
+            if ( meta.next != null ) { 
+                $.getJSON(meta.next, {}, function(json){    
+                    rebuild_page( json );
+                });                
+            }
+        });
+
+        $('#working_now').change(function(){
+            self = $('#working_now')[0];
+            url = '/rest/right/employee/?format=json&limit=' + meta.limit; 
+            if ( self.checked ) {
+                url += '&login__isnull=False'; 
+            }
+            $.getJSON(url, {}, function(json){    
+                rebuild_page( json );
+            });                
+        });
+    });
+    
+    meta = {};
+    meta['limit']       = {{ meta.limit }};
+    meta['offset']      = {{ meta.offset }};
+    meta['total_count'] = {{ meta.total_count }}
+    meta['next']        = {% if meta.next %} "{{ meta.next|safe }}" {% else %} null {% endif %};
+    meta['previous']    = {% if meta.previous %} "{{ meta.previous|safe }}" {% else %} null {% endif %};
+    
+    update_pager();
+</script>
+{% endblock userscript %}
