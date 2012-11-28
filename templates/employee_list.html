@@ -17,6 +17,7 @@
             </tr>
         </thead>
         <tbody id = 'dataset'>
+        {# с помощью конструкции {{ var }} подставляются переменные #}
         {% for e in employees %}
         <tr>
             <td>{{ e.id }}</td>
@@ -62,6 +63,12 @@
         text = "Отображены записи с " + meta.offset + " по " + (meta.offset + meta.limit) + " из " + meta.total_count;
         $('#current').append(text);
         
+        {% comment %}
+            метод 'add' добавляет в список classList элемент 'disabled'
+            метод 'remove' удаляет его, в случае присутствия
+            необходимо для того, что бы не 'уйти' раньше первой
+                                        и позже последнй страниц
+        {% endcomment %}
         if ( meta.next == null ) {
             $('#next')[0].classList.add('disabled');
         } else {
@@ -116,6 +123,7 @@
     meta = {};
     meta['limit']       = {{ meta.limit }};
     meta['offset']      = {{ meta.offset }};
+    {# сохраняем на клиенте #}
     meta['total_count'] = {{ meta.total_count }}
     meta['next']        = {% if meta.next %} "{{ meta.next|safe }}" {% else %} null {% endif %};
     meta['previous']    = {% if meta.previous %} "{{ meta.previous|safe }}" {% else %} null {% endif %};

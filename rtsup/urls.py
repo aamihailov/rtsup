@@ -8,6 +8,7 @@ from left.urls import api as left_api
 
 import views
 
+# проверка соответствия регекспа урла и обработчика
 urlpatterns = patterns('',
     url(r'^rest/', include(right_api.urls)),
     url(r'^rest/', include(left_api.urls)),

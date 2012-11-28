@@ -9,6 +9,7 @@ def employee_card(request, snils):
 
 
 def employee_list_all(request):
+    # установка параметров по умолчанию
     offset = int( request.GET.get('offset', '0') )
     limit  = int( request.GET.get('limit', '20') )
     es = Employee.objects.all()
