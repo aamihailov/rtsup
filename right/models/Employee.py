@@ -27,6 +27,29 @@ class Employee(models.Model):
     def __unicode__(self):
         return self.__str__()
     
+    def date_in(self):
+        ops = list(self.employeeoperation_set.filter(type__id=1))
+        if len(ops) > 0:
+            return ops[0].date
+        else:
+            return None
+    
+    def date_out(self):
+        ops = list(self.employeeoperation_set.filter(type__id=2))
+        if len(ops) > 0:
+            return ops[0].date
+        else:
+            return None
+        
+    def vacations(self):
+        dates_beg = list(self.employeeoperation_set.filter(type__id=3))
+        dates_end = list(self.employeeoperation_set.filter(type__id=4))
+        result = []
+        for i in xrange(len(dates_beg)):
+            result.append((dates_beg[i].date, dates_end[i].date))
+        return result
+    
+    
 
 import EmployeeRole
 class Handler( ModelResource ):

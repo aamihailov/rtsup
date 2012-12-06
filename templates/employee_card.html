@@ -1,1 +1,39 @@
 {% extends "base.html" %}
+
+{% block content %}
+    <h1 id ="title" class="well">Информация о сотруднике #{{ employee.id }}</h1>
+    <div class="row-fluid">
+        <div class="span4 well"> 
+            <div><strong>Должность:</strong> {{ employee.role.name }}</div>
+            {% if employee.technics_set.count %} <span class="label label-info">Есть права техника</span> {% endif %}
+            {% if employee.admins_set.count %} <span class="label label-success">Есть права администратора</span> {% endif %}
+        </div>
+        <div class="span8 well">
+            <dl class="dl-horizontal">
+                <dt>Полное имя:</dt>  <dd>{{ employee.name }}</dd>
+                <dt>СНИЛС:</dt>       <dd>{{ employee.snils }}</dd>
+                <dt>Логин:</dt>       <dd>{{ employee.login }}</dd>
+                <dt>Телефон:</dt>     <dd>{{ employee.phone }}</dd>
+                <dt>Адрес:</dt>       <dd>{{ employee.addr }}</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6 well">
+            <dl class="dl-horizontal">
+                <dt>Принят(а) на работу:</dt>  <dd>{{ employee.date_in }}</dd>
+                
+                {% for v in employee.vacations %}
+                <dt>Отпуск:</dt> <dd>{{ v.0 }} / {{ v.1 }}</dd>
+                {% endfor %}
+                
+                {% if employee.date_out %}
+                <dt>Уволен(а):</dt>            <dd>{{ employee.date_out }}</dd>
+                {% endif %}
+            </dl>
+        </div>
+        <div class="span6 well">
+            
+        </div>
+    </div>
+{% endblock content %}

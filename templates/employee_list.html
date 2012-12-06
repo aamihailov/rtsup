@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2 id ="title" class="well">Список сотрудников в системе
+    <h1 id ="title" class="well">Список сотрудников в системе
         <label class="checkbox">
             <input id="working_now" type="checkbox"> Только работающих сейчас
         </label>
-    </h2>
+    </h1>
     <table class="table table-striped">
         <thead class="strong">
             <tr> 
@@ -18,7 +18,7 @@
         </thead>
         <tbody id = 'dataset'>
         {% for e in employees %}
-        <tr>
+        <tr onclick="window.location='../{{ e.snils }}'">
             <td>{{ e.id }}</td>
             <td>{{ e.snils }}</td>
             <td>{{ e.name }}</td>
@@ -48,7 +48,7 @@
     }
     
     function build_dataset( data ) {
-        return '<tr>'
+        return '<tr onclick="window.location=\'../' + data.snils + '\'">'
              +   '<td>' + data.id + '</td>'
              +   '<td>' + data.snils + '</td>'
              +   '<td>' + data.name + '</td>'
@@ -116,7 +116,7 @@
     meta = {};
     meta['limit']       = {{ meta.limit }};
     meta['offset']      = {{ meta.offset }};
-    meta['total_count'] = {{ meta.total_count }}
+    meta['total_count'] = {{ meta.total_count }};
     meta['next']        = {% if meta.next %} "{{ meta.next|safe }}" {% else %} null {% endif %};
     meta['previous']    = {% if meta.previous %} "{{ meta.previous|safe }}" {% else %} null {% endif %};
     
