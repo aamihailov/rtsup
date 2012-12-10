@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from right.models import Employee
 
 from django.shortcuts import render_to_response

@@ -1,39 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 id ="title" class="well">Информация о сотруднике #{{ employee.id }}</h1>
     <div class="row-fluid">
-        <div class="span4 well"> 
+        <div class="span10">
+            <h1 id ="title" class="well">Информация о сотруднике #{{ employee.id }}</h1>
+        </div>
+        <div class="span2"></div>
+    </div>
+    <div class="row-fluid">
+        <div id="pic" class="span3 well" style="min-width: 250px;"> 
+            <div style="width: 200px; height: 300px; background: #aab; margin-left: auto; margin-right: auto;"></div>
             <div><strong>Должность:</strong> {{ employee.role.name }}</div>
             {% if employee.technics_set.count %} <span class="label label-info">Есть права техника</span> {% endif %}
             {% if employee.admins_set.count %} <span class="label label-success">Есть права администратора</span> {% endif %}
         </div>
-        <div class="span8 well">
-            <dl class="dl-horizontal">
-                <dt>Полное имя:</dt>  <dd>{{ employee.name }}</dd>
-                <dt>СНИЛС:</dt>       <dd>{{ employee.snils }}</dd>
-                <dt>Логин:</dt>       <dd>{{ employee.login }}</dd>
-                <dt>Телефон:</dt>     <dd>{{ employee.phone }}</dd>
-                <dt>Адрес:</dt>       <dd>{{ employee.addr }}</dd>
-            </dl>
-        </div>
-    </div>
-    <div class="row-fluid">
-        <div class="span6 well">
-            <dl class="dl-horizontal">
-                <dt>Принят(а) на работу:</dt>  <dd>{{ employee.date_in }}</dd>
-                
-                {% for v in employee.vacations %}
-                <dt>Отпуск:</dt> <dd>{{ v.0 }} / {{ v.1 }}</dd>
+        <div id="info" class="span7">
+            <div class="well">
+                <h3>Анкета</h3>
+                <dl class="well dl-horizontal" style="background-color:#DDD">
+                    <dt>Полное имя:</dt>  <dd>{{ employee.name }}</dd>
+                    <dt>СНИЛС:</dt>       <dd>{{ employee.snils }}</dd>
+                    <dt>Логин:</dt>       <dd>{{ employee.login }}</dd>
+                    <dt>Телефон:</dt>     <dd>{{ employee.phone }}</dd>
+                    <dt>Адрес:</dt>       <dd>{{ employee.addr }}</dd>
+                </dl>
+            </div>
+            <div class="well">
+                <h3>Список операций</h3>
+                <dl class="well dl-horizontal" style="background-color:#DDD">
+                    <dt>Принят(а) на работу:</dt>  <dd>{{ employee.date_in }}</dd>
+                    
+                    {% for v in employee.vacations %}
+                    <dt>Отпуск:</dt> <dd>{{ v.0 }} / {{ v.1 }}</dd>
+                    {% endfor %}
+                    
+                    {% if employee.date_out %}
+                    <dt>Уволен(а):</dt>            <dd>{{ employee.date_out }}</dd>
+                    {% endif %}
+                </dl>
+            </div>
+            <div class="well">
+                <h3>Используемое оборудование</h3>
+                {% for e in employee.my_equipment %}
+                <div class="well dl-horizontal" style="background-color:#DDD">
+                    <dt>Название:</dt>        <dd>{{ e.name }}</dd>
+                    <dt>Местоположение:</dt>  <dd>{{ e.addr }}</dd>
+                </div>
                 {% endfor %}
-                
-                {% if employee.date_out %}
-                <dt>Уволен(а):</dt>            <dd>{{ employee.date_out }}</dd>
-                {% endif %}
-            </dl>
-        </div>
-        <div class="span6 well">
-            
+            </div>
         </div>
     </div>
 {% endblock content %}
+
+{% block userscript %}
+<script>
+    window.onresize = function(event) {
+        if ( window.innerWidth >= 768 ) {
+            $('#title').width(
+                          $('#pic') .width() + 
+                          $('#info').width() +
+                parseInt( $('#info').css('margin-left').replace("px", ""))
+            );
+        } else {
+            $('#title').width( $('#navbar').width() - 80 );
+        }
+    }
+    
+    window.onload = window.onresize;
+</script>
+{% endblock userscript %}

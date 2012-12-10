@@ -17,6 +17,13 @@ class Equipment(models.Model):
     class Meta:
         app_label = 'left'
         db_table = 'equipment'
+        
+    def __str__(self):
+        format = '[%d : %s : %s : %s : %d]'
+        return format % (self.id, self.name, self.serial_number, self.addr, self.equipment_model_id)
+    
+    def __unicode__(self):
+        return self.__str__()
 
 
 

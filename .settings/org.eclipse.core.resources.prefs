@@ -23,3 +23,5 @@ encoding//right/models/EmployeeRole.py=utf-8
 encoding//right/models/EquipmentOwner.py=utf-8
 encoding//right/models/Technics.py=utf-8
 encoding//rtsup/router.py=utf-8
+encoding//rtsup/urls.py=utf-8
+encoding//rtsup/views.py=utf-8

@@ -45,9 +45,12 @@ class Employee(models.Model):
         dates_beg = list(self.employeeoperation_set.filter(type__id=3))
         dates_end = list(self.employeeoperation_set.filter(type__id=4))
         result = []
-        for i in xrange(len(dates_beg)):
+        for i in xrange(len(dates_end)):
             result.append((dates_beg[i].date, dates_end[i].date))
         return result
+    
+    def my_equipment(self):
+        return list(self.equipment_set.all())
     
     
 

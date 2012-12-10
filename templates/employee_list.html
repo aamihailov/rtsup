@@ -17,16 +17,16 @@
             </tr>
         </thead>
         <tbody id = 'dataset'>
-        {# с помощью конструкции {{ var }} подставляются переменные #}
-        {% for e in employees %}
-        <tr onclick="window.location='../{{ e.snils }}'">
-            <td>{{ e.id }}</td>
-            <td>{{ e.snils }}</td>
-            <td>{{ e.name }}</td>
-            <td>{{ e.phone }}</td>
-            <td>{{ e.addr }}</td>
-        </tr>
-        {% endfor %}
+            {# с помощью конструкции {{ var }} подставляются переменные #}
+            {% for e in employees %}
+            <tr onclick="window.location='../{{ e.snils }}'">
+                <td>{{ e.id }}</td>
+                <td>{{ e.snils }}</td>
+                <td>{{ e.name }}</td>
+                <td>{{ e.phone }}</td>
+                <td>{{ e.addr }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
     <div class="pagination pagination-centered">

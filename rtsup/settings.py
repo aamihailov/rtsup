@@ -11,45 +11,12 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'local_pg': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'study',                   
-        'USER': 'techsup',                   
-        'PASSWORD': '123123',                
-        'HOST': 'localhost',
-        'PORT': '',
-        'OPTIONS': {
-            'options': '-c search_path=techsup'
-        }
-    },
-    'local51_pg': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'students51',                   
-        'USER': 'pmm8101',                   
-        'PASSWORD': 'retodarn',                
-        'HOST': 'localhost',
-        'PORT': '',
-        'OPTIONS': {
-            'options': '-c search_path=_techsup_left'
-        }
-    },
-    'local52_pg': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'students52',                   
-        'USER': 'pmm8101',                   
-        'PASSWORD': 'retodarn',                
-        'HOST': 'localhost',
-        'PORT': '',
-        'OPTIONS': {
-            'options': '-c search_path=_techsup_right'
-        }
-    },
     'students51_pg': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'students51',                   
         'USER': 'pmm8101',                   
         'PASSWORD': 'retodarn',                
-        'HOST': 'fpm2.ami.nstu.ru',
+        'HOST': 'amihailov.pro',
         'PORT': '',
         'OPTIONS': {
             'options': '-c search_path=_techsup_left'
@@ -60,14 +27,14 @@ DATABASES = {
         'NAME': 'students52',                   
         'USER': 'pmm8101',                   
         'PASSWORD': 'retodarn',                
-        'HOST': 'fpm2.ami.nstu.ru',
+        'HOST': 'amihailov.pro',
         'PORT': '',
         'OPTIONS': {
             'options': '-c search_path=_techsup_right'
         }
     },
 }
-DATABASES['default'] = DATABASES['local_pg']
+DATABASES['default'] = DATABASES['students51_pg']
 DATABASE_ROUTERS = ['rtsup.router.LeftRightRouter']
 
 TIME_ZONE = 'Asia/Novosibirsk'

@@ -29,7 +29,7 @@
     
     <body>
 
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -49,10 +49,9 @@
       </div>
     </div>     
                 
-    <div class="container-fluid">                
-    <div class="row-fluid">                
-	    <div class="span2"></div>
-	    <div id="container" class="span8">
+    <div class="container">                
+    <div class="row">                
+	    <div id="container" class="span12">
 {% block content %}
 {% endblock content %}
         <br>
@@ -63,7 +62,6 @@
 {% endblock footer %}
 			</footer>     	
 	    </div>
-	    <div class="span2"></div>
     </div>
     </div>
 
