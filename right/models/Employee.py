@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from tastypie import fields
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
+from EmployeeOperationType import EmployeeOperationType
+from EquipmentOwner import EquipmentOwner
 
 # Сотрудник
 class Employee(models.Model):
@@ -27,48 +27,53 @@ class Employee(models.Model):
     def __unicode__(self):
         return self.__str__()
     
-    def date_in(self):
-        ops = list(self.employeeoperation_set.filter(type__id=1))
-        if len(ops) > 0:
-            return ops[0].date
-        else:
-            return None
+    def get_general(self):
+        return ({'id'       : self.id,
+                 'name'     : self.name,
+                 'login'    : self.login,
+                 'snils'    : self.snils,
+                 'phone'    : self.phone,
+                 'addr'     : self.addr,
+                 'role'     : self.role.name,
+                 'resource_uri' : ( '/employee/%d/' % self.id )
+               })
     
-    def date_out(self):
-        ops = list(self.employeeoperation_set.filter(type__id=2))
-        if len(ops) > 0:
-            return ops[0].date
-        else:
-            return None
+    def get_operations(self):
+        ans = []
+        ops = self.employeeoperation_set.select_related("type").all()
+        for op in ops:
+            ans.append({'id'   : op.id,
+                        'type' : op.type.name, 
+                        'date' : ('%s' % op.date) })
+        return ans
+    
+    def get_equipment(self):
+        ans = []
+        eos = EquipmentOwner.objects.filter(employee_id=self.id)\
+                                    .select_related('equipment', 'equipment__equipment_model')\
+                                    .order_by('start_datetime','finish_datetime')
+        none_or_str = lambda x: None if not x else '%s' % x
+        for eo in eos:
+            ans.append({'equipment'     : eo.equipment.get_general(),
+                        'date_begin'    : none_or_str(eo.start_datetime),
+                        'date_end'      : none_or_str(eo.finish_datetime),
+                        'actual'        : (eo.finish_datetime == None)
+                        })
+        return ans
         
-    def vacations(self):
-        dates_beg = list(self.employeeoperation_set.filter(type__id=3))
-        dates_end = list(self.employeeoperation_set.filter(type__id=4))
-        result = []
-        for i in xrange(len(dates_end)):
-            result.append((dates_beg[i].date, dates_end[i].date))
-        return result
+    def get_tasks(self):
+        ans = []
+        ts  = self.as_client_set.all().select_related('owner').order_by('datetime')
+        for t in ts:
+            ans.append({'id'       : t.id,
+                        'name'     : t.name,
+                        'owner'    : t.owner.get_general(),
+                        'datetime' : ( '%s' % t.datetime )})
+        return ans
     
-    def my_equipment(self):
-        return list(self.equipment_set.all())
+    def have_admin_rights(self):
+        return self.admins_set.exists()
     
+    def have_technic_rights(self):
+        return self.technics_set.exists()
     
-
-import EmployeeRole
-class Handler( ModelResource ):
-    role     = fields.ForeignKey  (EmployeeRole.Handler, 'role')
-    role_id  = fields.IntegerField('role_id')
-    
-    class Meta:
-        queryset = Employee.objects.all()
-        resource_name = 'employee'
-
-        filtering = {
-             'id'     : ALL,
-             'snils'  : ALL,
-             'name'   : ALL,
-             'phone'  : ALL,
-             'addr'   : ALL,
-             'login'  : ALL,
-             'role'   : ALL_WITH_RELATIONS,
-        }

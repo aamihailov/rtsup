@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from tastypie import fields
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -13,16 +11,4 @@ class EmployeeRole(models.Model):
     class Meta:
         app_label = 'right'
         db_table = 'employee_role'
-
-
-
-class Handler( ModelResource ):
-    class Meta:
-        queryset = EmployeeRole.objects.all()
-        resource_name = 'employee_role'
-    
-    filtering = {
-             'id'     : ALL,
-             'name'   : ALL,
-    }
     

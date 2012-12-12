@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from tastypie import fields
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -14,15 +12,3 @@ class EquipmentOperationType(models.Model):
         app_label = 'left'
         db_table = 'equipment_operation_type'
 
-
-
-class Handler( ModelResource ):
-    class Meta:
-        queryset = EquipmentOperationType.objects.all()
-        resource_name = 'equipment_operation_type'
-
-    filtering = {
-        'id'        : ALL,
-        'name'      : ALL,
-    }
-    

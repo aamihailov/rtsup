@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from tastypie import fields
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
 
@@ -14,14 +12,3 @@ class TaskPriority(models.Model):
         app_label = 'left'
         db_table = 'task_priority'
 
-
-
-class Handler( ModelResource ):
-    class Meta:
-        queryset = TaskPriority.objects.all()
-        resource_name = 'task_priority'
-    
-    filtering = {
-        'id'        : ALL,
-        'name'      : ALL,
-    }

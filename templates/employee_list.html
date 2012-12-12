@@ -3,7 +3,7 @@
 {% block content %}
     <h1 id ="title" class="well">Список сотрудников в системе
         <label class="checkbox">
-            <input id="working_now" type="checkbox"> Только работающих сейчас
+            <input id="working_now" type="checkbox" checked="checked"> Только работающих сейчас
         </label>
     </h1>
     <table class="table table-striped">
@@ -18,8 +18,8 @@
         </thead>
         <tbody id = 'dataset'>
             {# с помощью конструкции {{ var }} подставляются переменные #}
-            {% for e in employees %}
-            <tr onclick="window.location='../{{ e.snils }}'">
+            {% for e in data.objects %}
+            <tr onclick="window.location=uri_to_page_addr('{{ e.resource_uri }}')">
                 <td>{{ e.id }}</td>
                 <td>{{ e.snils }}</td>
                 <td>{{ e.name }}</td>
@@ -40,7 +40,15 @@
 
 
 {% block userscript %}
-<script>
+<script language="JavaScript">
+    function uri_to_addr( uri ) {
+        return "/api" + uri;
+    }
+
+    function uri_to_page_addr( uri ) {
+        return uri;
+    }
+
     function clear_dataset( ) {
         var Parent = $('#dataset')[0];
         while ( Parent.hasChildNodes( ) ) {
@@ -49,7 +57,7 @@
     }
     
     function build_dataset( data ) {
-        return '<tr onclick="window.location=\'../' + data.snils + '\'">'
+        return '<tr onclick="window.location=uri_to_page_addr(\'' + data.resource_uri + '\')\">'
              +   '<td>' + data.id + '</td>'
              +   '<td>' + data.snils + '</td>'
              +   '<td>' + data.name + '</td>'
@@ -60,22 +68,16 @@
     
     function update_pager( ) {
         $('#current').empty();
-        text = "Отображены записи с " + meta.offset + " по " + (meta.offset + meta.limit) + " из " + meta.total_count;
+        text = "Отображена страница " + meta.page + " из " + meta.total_pages;
         $('#current').append(text);
         
-        {% comment %}
-            метод 'add' добавляет в список classList элемент 'disabled'
-            метод 'remove' удаляет его, в случае присутствия
-            необходимо для того, что бы не 'уйти' раньше первой
-                                        и позже последнй страниц
-        {% endcomment %}
-        if ( meta.next == null ) {
+        if ( meta.uri_next == null ) {
             $('#next')[0].classList.add('disabled');
         } else {
             $('#next')[0].classList.remove('disabled');
         }
 
-        if ( meta.previous == null ) {
+        if ( meta.uri_previous == null ) {
             $('#prev')[0].classList.add('disabled');
         } else {
             $('#prev')[0].classList.remove('disabled');
@@ -88,45 +90,51 @@
         $.each(json.objects, function(){
             $('#dataset').append(build_dataset(this));
         });
-        update_pager();        
+        update_pager();
     }
     
-    $(document).ready(function(){                        
+    $(document).ready(function() {
         $('#prev').click(function(){
-            if ( meta.previous != null ) { 
-                $.getJSON(meta.previous, {}, function(json){    
+            if ( meta.uri_previous != null ) { 
+                $.getJSON(uri_to_addr(meta.uri_previous), {}, function(json){    
                     rebuild_page( json );
-                });                
+                });
             }
         });
 
-        $('#next').click(function(){                    
-            if ( meta.next != null ) { 
-                $.getJSON(meta.next, {}, function(json){    
+        $('#next').click(function(){
+            if ( meta.uri_next != null ) { 
+                $.getJSON(uri_to_addr(meta.uri_next), {}, function(json){    
                     rebuild_page( json );
-                });                
+                });
             }
         });
 
         $('#working_now').change(function(){
             self = $('#working_now')[0];
-            url = '/rest/right/employee/?format=json&limit=' + meta.limit; 
             if ( self.checked ) {
-                url += '&login__isnull=False'; 
+                url = uri_to_addr(meta.uri_exist);
+            } else {
+                url = uri_to_addr(meta.uri_allexist);
             }
-            $.getJSON(url, {}, function(json){    
+            $.getJSON(url, {}, function(json){
                 rebuild_page( json );
-            });                
+            });
         });
     });
     
     {# сохраняем на клиенте #}
     meta = {};
-    meta['limit']       = {{ meta.limit }};
-    meta['offset']      = {{ meta.offset }};
-    meta['total_count'] = {{ meta.total_count }};
-    meta['next']        = {% if meta.next %} "{{ meta.next|safe }}" {% else %} null {% endif %};
-    meta['previous']    = {% if meta.previous %} "{{ meta.previous|safe }}" {% else %} null {% endif %};
+    meta['total_count']  = {{ data.meta.total_count }};
+    meta['total_pages']  = {{ data.meta.total_pages }};
+    meta['limit']        = {{ data.meta.limit }};
+    meta['page']         = {{ data.meta.page }};
+    meta['uri_first']    = "{{ data.meta.uri_first|safe }}";
+    meta['uri_last']     = "{{ data.meta.uri_last|safe }}";
+    meta['uri_exist']    = "{{ data.meta.uri_exist|safe }}";
+    meta['uri_allexist'] = "{{ data.meta.uri_allexist|safe }}";
+    meta['uri_previous'] = {% if data.meta.uri_previous %} "{{ data.meta.uri_previous|safe }}" {% else %} null {% endif %};
+    meta['uri_next']     = {% if data.meta.uri_next %} "{{ data.meta.uri_next|safe }}" {% else %} null {% endif %};
     
     update_pager();
 </script>

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from tastypie import fields
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 import settings as s
+
+from right.models import EquipmentOwner
 
 # Оборудование
 class Equipment(models.Model):
@@ -24,22 +24,49 @@ class Equipment(models.Model):
     
     def __unicode__(self):
         return self.__str__()
-
-
-
-import EquipmentModel
-class Handler( ModelResource ):
-    equipment_model_url = fields.ForeignKey(EquipmentModel.Handler, 'equipment_model')
-    equipment_model_id  = fields.IntegerField('equipment_model_id')
     
-    class Meta:
-        queryset = Equipment.objects.all()
-        resource_name = 'equipment'
+    def get_general(self):
+        return ({'id'               : self.id,
+                 'name'             : self.name,
+                 'serial_number'    : self.serial_number,
+                 'addr'             : self.addr,
+                 'model'            : self.equipment_model.name,
+                 'resource_uri'     : ( '/equipment/%d/' % self.id ),
+               })
+        
+    def get_owners(self):
+        ans = []
+        eos = EquipmentOwner.objects.filter(equipment_id=self.id)\
+                                    .select_related('employee', 'employee__role')\
+                                    .order_by('start_datetime','finish_datetime')
+        none_or_str = lambda x: None if not x else '%s' % x
+        for eo in eos:
+            ans.append({'employee'      : eo.employee.get_general(),
+                        'date_begin'    : none_or_str(eo.start_datetime),
+                        'date_end'      : none_or_str(eo.finish_datetime),
+                        'actual'        : (eo.finish_datetime == None)
+                        })
+        return ans
 
-    filtering = {
-        'id'                : ALL,
-        'name'              : ALL,
-        'serial_number'     : ALL,
-        'addr'              : ALL,
-        'equipment_model'   : ALL_WITH_RELATIONS,
-    }
+    def get_operations(self):
+        ans = []
+        ops = self.equipmentoperation_set.select_related("eq_oper_type").all()
+        for op in ops:
+            ans.append({'id'       : op.id,
+                        'type'     : op.eq_oper_type.name, 
+                        'datetime' : ('%s' % op.datetime) })
+        return ans
+    
+    def get_tasks(self):
+        ans = []
+        ts  = self.task_set.all().select_related('owner', 
+                                                 'owner__role', 
+                                                 'client', 
+                                                 'client__role').order_by('datetime')
+        for t in ts:
+            ans.append({'id'       : t.id,
+                        'name'     : t.name,
+                        'owner'    : t.owner.get_general(),
+                        'client'   : t.client.get_general(),
+                        'datetime' : ( '%s' % t.datetime )})
+        return ans
