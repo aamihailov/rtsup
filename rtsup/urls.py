@@ -16,4 +16,6 @@ urlpatterns = patterns('',
     url(r'^api/task/(?P<task_id>\d+)/equipment/$', views.get_equipment_by_task),
     
     url(r'^api/task/(?P<task_id>\d+)/equipment/(?P<equipment_id>\d+)/$', views.set_equipment_for_task),
+
+    url(r'^api/task/$', views.post_new_task),
 )

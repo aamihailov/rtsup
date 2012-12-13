@@ -49,24 +49,34 @@
             <div class="well">
                 <h3>Задачи, инициированные сотрудником</h3>
                 {% for t in data.object.tasks %}
-                <div class="well dl-horizontal" style="background-color:#DDD" onclick="loadEquipment({{t.id}});">
+                <div class="well dl-horizontal" style="background-color:#DDD">
                     <dt>ID:</dt>                    <dd>{{ t.id }}</dd>
                     <dt>Время регистрации:</dt>     <dd>{{ t.datetime }}</dd>
-                    <dt>Название задачи:</dt>       <dd>{{ t.name }}</dd>
-                    <dt>Ответственный техник:</dt>  <dd onclick="window.location='{{ t.owner.resource_uri }}'">{{ t.owner.name }}</dd>
+                    <dt>Название задачи:</dt>       <dd onclick="loadEquipment({{t.id}});">{{ t.name }}</dd>
+                    <dt>Ответственный техник:</dt>  <dd onclick="window.location=uri_to_page_addr('{{ t.owner.resource_uri }}')">{{ t.owner.name }}</dd>
                     <div id="task-equipment-{{ t.id }}" class="task-equipment"></div>
                 </div>
                 {% endfor %}
+                <h4>Добавить оборудование к задаче</h4>
+                <select id="select-task-id">
+                    {% for t in data.object.tasks %}
+                    <option value="{{ t.id }}">{{ t.id }}: {{ t.name }}</option>
+                    {% endfor %}
+                </select>
+                <select id="select-equipment-id">
+                    {% for eq in data.object.owner_of %}
+                    {% if eq.actual %}
+                    <option value="{{ eq.equipment.id }}">{{ eq.equipment.id }}: {{ eq.equipment.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <button class="btn" type="button" onclick="addEquipmentToTask($('#select-task-id :selected').val(), $('#select-equipment-id :selected').val());">Прикрепить</button>
             </div>
             <div class="well">
                 <h3>Новая задача</h3>
-            </div>
-            <div class="well">
-                <h3>Задачи и оборудование</h3>
-                <input id="task-id" type="text" placeholder="ID задачи" style="width: 100px">
-                <input id="equipment-id" type="text" placeholder="ID оборудования" style="width: 100px">
-                <button class="btn" type="button" onclick="addEquipmentToTask();">Прикрепить</button>
-                <button class="btn" type="button" onclick="removeEquipmentFromTask();">Открепить</button>
+                    <input id="new-task-time" type="text" ondblclick="task_set_time();" placeholder="Время">
+                    <input id="new-task-name" type="text" placeholder="Описание">
+                    <button class="btn" onclick="postTask($('#new-task-time').val(), $('#new-task-name').val(), 3);">Оформить</button>
             </div>
         </div>
     </div>
@@ -78,16 +88,22 @@
         return "/api" + uri;
     }
 
+    function uri_to_page_addr( uri ) {
+        return uri;
+    }
+
+
     $('#equipment-toggle').click(function(){
         $('.extra-equipment').toggle()
     });
     
-    function build_equipment_for_task(json) {
+    function build_equipment_for_task(json, task_id) {
         return  '<div class="well dl-horizontal">'
               + '    <dt>ID:</dt>                        <dd> ' + json.id + ' </dd>'
               + '    <dt>Название:</dt>                  <dd> ' + json.name + ' </dd>'
               + '    <dt>Местоположение:</dt>            <dd> ' + json.addr + ' </dd>'
               + '    <dt>Серийный номер:</dt>            <dd> ' + json.serial_number + '</dd>'
+              + '    <button class="btn" type="button" onclick="removeEquipmentFromTask(' + task_id + ', ' + json.id + ');">Открепить</button>'
               + '</div>'
     }    
     
@@ -97,29 +113,38 @@
         $.getJSON(uri_to_addr(uri), {}, function(json) {
             $(place).empty();
             $.each(json, function(){
-                $(place).append(build_equipment_for_task(this));
+                $(place).append(build_equipment_for_task(this, task_id));
             });
         });
     }
     
-    function addEquipmentToTask() {
-        task_id = $('#task-id').val();
-        equipment_id = $('#equipment-id').val();
+    function addEquipmentToTask(task_id, equipment_id) {
         uri = '/task/' + task_id + '/equipment/' + equipment_id + '/';
-        $('#task-id').addClass('btn-danger');
         $.post(uri_to_addr(uri), {}).done(function() { 
-            $('#task-id').removeClass('btn-danger');
+            loadEquipment(task_id);
         });
     }
 
-    function removeEquipmentFromTask() {
-        task_id = $('#task-id').val();
-        equipment_id = $('#equipment-id').val();
+    function removeEquipmentFromTask(task_id, equipment_id) {
         uri = '/task/' + task_id + '/equipment/' + equipment_id + '/';
-        $('#task-id').addClass('btn-danger');
         $.ajax(uri_to_addr(uri), {type:'DELETE'}).done(function() { 
-            $('#task-id').removeClass('btn-danger');
+            loadEquipment(task_id);
         });
+    }
+    
+    function postTask(time, name, priority) {
+        uri = '/task/';
+        $.ajax(uri_to_addr(uri), {type:'POST', data: {client_id: {{ data.object.general.id }}, datetime: time, name: name, priority: priority}} ).done(function() { 
+            window.location.reload();
+        });
+        // $.post(uri_to_addr(uri), {client_id: {{ data.object.general.id }}, datetime: time, name: name, priority: priority}).done(function() { 
+            // window.location.reload();
+        // });
+    }
+
+    function task_set_time() {
+        $('#new-task-time').val((new Date()).toISOString())
+        $('#new-task-name').val("qqq")
     }
 
     window.onresize = function(event) {

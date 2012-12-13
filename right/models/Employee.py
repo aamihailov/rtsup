@@ -67,7 +67,7 @@ class Employee(models.Model):
         for t in ts:
             ans.append({'id'       : t.id,
                         'name'     : t.name,
-                        'owner'    : t.owner.get_general(),
+                        'owner'    : t.owner.get_general() if t.owner else None,
                         'datetime' : ( '%s' % t.datetime )})
         return ans
     

@@ -149,8 +149,19 @@ def get_equipment_by_task(request, task_id):
 def set_equipment_for_task(request, task_id, equipment_id):
     if request.method == 'POST':
         Task.objects.get(id=task_id).equipment.add(equipment_id)
-        return HttpResponse()
+        return HttpResponse(status=201)
     elif request.method == 'DELETE':
         Task.objects.get(id=task_id).equipment.remove(equipment_id)
-        return HttpResponse()
+        return HttpResponse(status=202)
+    return HttpResponseBadRequest()
+
+from datetime import datetime as dt
+def post_new_task(request):
+    if request.method == 'POST':
+        client_id= request.REQUEST.get('client_id', None)
+        datetime = request.REQUEST.get('datetime',  '%s' % dt.now())
+        name     = request.REQUEST.get('name',  'blablabla')
+        priority = request.REQUEST.get('priority', '3')
+        priority = int(priority)
+        return HttpResponse(status=201)
     return HttpResponseBadRequest()
