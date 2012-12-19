@@ -163,5 +163,6 @@ def post_new_task(request):
         name     = request.REQUEST.get('name',  'blablabla')
         priority = request.REQUEST.get('priority', '3')
         priority = int(priority)
+        Task(client_id = client_id, datetime=datetime, name=name, priority_id=priority).save()
         return HttpResponse(status=201)
     return HttpResponseBadRequest()
