@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Django students52_pg" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="876b1f34-f670-426a-837e-01f37360868b">
+    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    <jdbc-url>jdbc:postgresql://amihailov.pro/students52</jdbc-url>
+    <user-name>pmm8101</user-name>
+    <user-password>dfd8dfcfdfdedfc5dfcedfcbdfd8dfc4</user-password>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.PyCharm20/config/jdbc-drivers/postgresql-driver-license.txt</url>
+      </library>
+      <library>
+        <url>jar://$USER_HOME$/.PyCharm20/config/jdbc-drivers/postgresql-9.1-901.jdbc3.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+  <data-source source="LOCAL" name="Django students51_pg" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="f3d64380-019b-42dd-9e0b-f11b43586c6a">
+    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    <jdbc-url>jdbc:postgresql://amihailov.pro/students51</jdbc-url>
+    <user-name>pmm8101</user-name>
+    <user-password>dfd8dfcfdfdedfc5dfcedfcbdfd8dfc4</user-password>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.PyCharm20/config/jdbc-drivers/postgresql-driver-license.txt</url>
+      </library>
+      <library>
+        <url>jar://$USER_HOME$/.PyCharm20/config/jdbc-drivers/postgresql-9.1-901.jdbc3.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>
