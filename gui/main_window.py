@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Sat Dec 22 02:52:22 2012
+# Created: Sat Dec 22 04:31:34 2012
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -71,6 +71,9 @@ class Ui_MainWindow(object):
         self.employeeListExistCheckbox.setObjectName("employeeListExistCheckbox")
         self.verticalLayout.addWidget(self.employeeListExistCheckbox)
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
+        self.exportToExcel = QtGui.QPushButton(self.employeeListTab)
+        self.exportToExcel.setObjectName("exportToExcel")
+        self.gridLayout_2.addWidget(self.exportToExcel, 1, 0, 1, 1)
         self.horizontalLayout.addWidget(self.employeeListTab)
         self.employeeInfoTab = QtGui.QGroupBox(self.centralWidget)
         self.employeeInfoTab.setObjectName("employeeInfoTab")
@@ -327,7 +330,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.employeeTab.setCurrentIndex(3)
+        self.employeeTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.employeeListTable, self.employeeListBackButton)
         MainWindow.setTabOrder(self.employeeListBackButton, self.employeeDetailsLogin)
@@ -358,6 +361,7 @@ class Ui_MainWindow(object):
         self.employeeListTable.item(1, 1).setText(QtGui.QApplication.translate("MainWindow", "соединения", None, QtGui.QApplication.UnicodeUTF8))
         self.employeeListTable.setSortingEnabled(__sortingEnabled)
         self.employeeListExistCheckbox.setText(QtGui.QApplication.translate("MainWindow", "Отображать только работающих сейчас", None, QtGui.QApplication.UnicodeUTF8))
+        self.exportToExcel.setText(QtGui.QApplication.translate("MainWindow", "Выгрузить список всех сотрудников в файл Excel", None, QtGui.QApplication.UnicodeUTF8))
         self.employeeInfoTab.setTitle(QtGui.QApplication.translate("MainWindow", "Информация о сотруднике", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Полное имя", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "СНИЛС", None, QtGui.QApplication.UnicodeUTF8))

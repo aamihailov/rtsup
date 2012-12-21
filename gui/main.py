@@ -3,19 +3,12 @@ import datetime
 
 from connection import Connection
 
-def main():
-    c = Connection('amihailov.pro', '/rtsup/api')
-    succeed, employees = c.get_employee_list()
-    print employees
-    if succeed:
-        print employees['objects'][0]['addr'].encode('utf-8')
-
-
 import sys
 from PySide import QtCore, QtGui
 from main_window import Ui_MainWindow
 from datetime import datetime
 
+from excelSaver import ExcelSaver
 
 
 
@@ -47,6 +40,7 @@ class MyMainWindow(QtGui.QMainWindow):
         self.ui.taskEquipmentAttachButton.clicked.connect(self.attach_equipment_to_task)
         self.ui.taskEquipmentDetachButton.clicked.connect(self.detach_equipment_from_task)
         self.ui.newTaskButton.clicked.connect(self.publish_new_task)
+        self.ui.exportToExcel.clicked.connect(self.export_to_excel)
 
     def reset_employee_list(self, data):
         succeed, employees = data
@@ -289,6 +283,17 @@ class MyMainWindow(QtGui.QMainWindow):
         self._c.add_task(client_id, name, time)
         self.get_employee_details(client_id)
 
+    def export_to_excel(self):
+        w = ExcelSaver()
+        self.ui.statusBar.showMessage(u'Загружается список всех сотрудников...')
+        filename = 'report.xls'
+        succeed, employees = self._c.get_employee_list(1000)
+        if succeed:
+            w.makeEmployeeList(employees)
+            w.save(filename)
+            self.ui.statusBar.showMessage(u'Информация была успешно сохранена в файле %s' % filename, 2000)
+        else:
+            self.ui.statusBar.showMessage(u'Не удалось сохранить информацию', 2000)
 
 
 
@@ -300,6 +305,20 @@ def uimain():
     myapp.show()
     myapp.afterRun()
     sys.exit(app.exec_())
+
+
+
+
+
+
+
+def main():
+    c = Connection('amihailov.pro', '/rtsup/api')
+    succeed, employees = c.get_employee_list()
+    if succeed:
+        w = ExcelSaver()
+        w.makeEmployeeList(employees)
+        w.save('test.xls')
 
 
 

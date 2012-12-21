@@ -128,6 +128,13 @@
            </item>
           </layout>
          </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="exportToExcel">
+           <property name="text">
+            <string>Выгрузить список всех сотрудников в файл Excel</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -140,7 +147,7 @@
          <item row="1" column="0">
           <widget class="QTabWidget" name="employeeTab">
            <property name="currentIndex">
-            <number>3</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="employeeTabDetails">
             <attribute name="title">
