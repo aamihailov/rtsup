@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1013</width>
-    <height>630</height>
+    <width>1151</width>
+    <height>809</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,14 +69,19 @@
               <set>QAbstractItemView::NoEditTriggers</set>
              </property>
              <property name="rowCount">
-              <number>1</number>
+              <number>2</number>
              </property>
              <property name="columnCount">
               <number>2</number>
              </property>
              <row>
               <property name="text">
-               <string>ыыы</string>
+               <string>Возможно</string>
+              </property>
+             </row>
+             <row>
+              <property name="text">
+               <string>С</string>
               </property>
              </row>
              <column>
@@ -91,9 +96,34 @@
              </column>
              <item row="0" column="0">
               <property name="text">
-               <string>as</string>
+               <string>возникли</string>
               </property>
              </item>
+             <item row="0" column="1">
+              <property name="text">
+               <string>проблемы</string>
+              </property>
+             </item>
+             <item row="1" column="0">
+              <property name="text">
+               <string>установлением</string>
+              </property>
+             </item>
+             <item row="1" column="1">
+              <property name="text">
+               <string>соединения</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="employeeListExistCheckbox">
+             <property name="text">
+              <string>Отображать только работающих сейчас</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
@@ -108,11 +138,11 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="1" column="0">
-          <widget class="QTabWidget" name="tabWidget">
+          <widget class="QTabWidget" name="employeeTab">
            <property name="currentIndex">
-            <number>1</number>
+            <number>3</number>
            </property>
-           <widget class="QWidget" name="tab_1">
+           <widget class="QWidget" name="employeeTabDetails">
             <attribute name="title">
              <string>Анкета</string>
             </attribute>
@@ -130,7 +160,7 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="lineEdit"/>
+                <widget class="QLineEdit" name="employeeDetailsName"/>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_3">
@@ -168,30 +198,163 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_2"/>
+                <widget class="QLineEdit" name="employeeDetailsSnils"/>
                </item>
                <item row="2" column="1">
-                <widget class="QLineEdit" name="lineEdit_3"/>
+                <widget class="QLineEdit" name="employeeDetailsLogin"/>
                </item>
                <item row="3" column="1">
-                <widget class="QLineEdit" name="lineEdit_4"/>
+                <widget class="QLineEdit" name="employeeDetailsPhone"/>
                </item>
                <item row="4" column="1">
-                <widget class="QLineEdit" name="lineEdit_5"/>
+                <widget class="QLineEdit" name="employeeDetailsAddr"/>
                </item>
                <item row="5" column="1">
-                <widget class="QLineEdit" name="lineEdit_6"/>
+                <widget class="QLineEdit" name="employeeDetailsRole"/>
                </item>
               </layout>
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tab_2">
+           <widget class="QWidget" name="employeeTabOperations">
             <attribute name="title">
              <string>Список операций</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_5">
              <item row="0" column="1">
+              <widget class="QTableWidget" name="employeeOperationsTable">
+               <row>
+                <property name="text">
+                 <string>Сначала</string>
+                </property>
+               </row>
+               <column>
+                <property name="text">
+                 <string>Тип операции</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Дата</string>
+                </property>
+               </column>
+               <item row="0" column="0">
+                <property name="text">
+                 <string>Выберите</string>
+                </property>
+               </item>
+               <item row="0" column="1">
+                <property name="text">
+                 <string>сотрудника</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="employeeTabEquipment">
+            <attribute name="title">
+             <string>Оборудование</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item alignment="Qt::AlignTop">
+              <widget class="QComboBox" name="equipmentListBox"/>
+             </item>
+             <item>
+              <layout class="QFormLayout" name="formLayout_2">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>Адрес</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="equipmentAddr"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="equipmentName"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="equipmentSN"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="equipmentModel"/>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="equipmentDateBegin"/>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="equipmentDateEnd"/>
+               </item>
+               <item row="6" column="1">
+                <widget class="QLineEdit" name="equipmentActual"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Наименование</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Серийный номер</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_11">
+                 <property name="text">
+                  <string>Модель</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_12">
+                 <property name="text">
+                  <string>Владение по</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>Владение с</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>Владение сейчас</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="equipmentExistCheckbox">
+               <property name="text">
+                <string>Отображать только активное сейчас</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="employeeTabTasks">
+            <attribute name="title">
+             <string>Задачи</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <widget class="QComboBox" name="tasksListBox"/>
+             </item>
+             <item row="1" column="0">
               <widget class="QScrollArea" name="scrollArea">
                <property name="widgetResizable">
                 <bool>true</bool>
@@ -201,24 +364,195 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>443</width>
-                  <height>521</height>
+                  <width>512</width>
+                  <height>645</height>
                  </rect>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_2">
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_3"/>
+                <layout class="QGridLayout" name="gridLayout_9">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <property name="fieldGrowthPolicy">
+                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_15">
+                     <property name="text">
+                      <string>Дата открытия</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="taskDate"/>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_16">
+                     <property name="text">
+                      <string>Ответственный</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="taskOwner"/>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_17">
+                     <property name="text">
+                      <string>Описание задачи</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QPlainTextEdit" name="taskDescription"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QGroupBox" name="groupBox">
+                   <property name="title">
+                    <string>Работа с оборудованием</string>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_7">
+                    <item row="0" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_3">
+                      <item>
+                       <widget class="QPushButton" name="taskEquipmentDetachButton">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="baseSize">
+                         <size>
+                          <width>30</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Открепить от задачи</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="taskEquipmentBox"/>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="1" column="0">
+                     <layout class="QFormLayout" name="formLayout_4">
+                      <property name="fieldGrowthPolicy">
+                       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                      </property>
+                      <item row="0" column="1">
+                       <widget class="QLineEdit" name="taskEquipmentID"/>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_18">
+                        <property name="text">
+                         <string>ID</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_19">
+                        <property name="text">
+                         <string>Название</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="label_20">
+                        <property name="text">
+                         <string>Адрес</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLineEdit" name="taskEquipmentName"/>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLineEdit" name="taskEquipmentAddr"/>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="label_21">
+                        <property name="text">
+                         <string>Серийный номер</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="taskEquipmentSerial"/>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="2" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_4">
+                      <item>
+                       <widget class="QPushButton" name="taskEquipmentAttachButton">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="baseSize">
+                         <size>
+                          <width>30</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Прикрепить к задаче</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="taskEquipmentAttachBox"/>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QGroupBox" name="groupBox_2">
+                   <property name="title">
+                    <string>Новая задача</string>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_6">
+                    <item row="0" column="0">
+                     <layout class="QFormLayout" name="formLayout_5">
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_22">
+                        <property name="text">
+                         <string>Время</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QLineEdit" name="newTaskTime"/>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_23">
+                        <property name="text">
+                         <string>Описание</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QPlainTextEdit" name="newTaskDescription"/>
+                      </item>
+                      <item row="2" column="0" colspan="2">
+                       <widget class="QPushButton" name="newTaskButton">
+                        <property name="text">
+                         <string>Разместить</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
                  </item>
                 </layout>
                </widget>
               </widget>
              </item>
             </layout>
-           </widget>
-           <widget class="QWidget" name="tab_3">
-            <attribute name="title">
-             <string>Оборудование и задачи</string>
-            </attribute>
            </widget>
           </widget>
          </item>
@@ -229,8 +563,21 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>employeeListTable</tabstop>
+  <tabstop>employeeListBackButton</tabstop>
+  <tabstop>employeeDetailsLogin</tabstop>
+  <tabstop>employeeTab</tabstop>
+  <tabstop>employeeDetailsName</tabstop>
+  <tabstop>employeeDetailsPhone</tabstop>
+  <tabstop>employeeDetailsAddr</tabstop>
+  <tabstop>employeeDetailsRole</tabstop>
+  <tabstop>employeeDetailsSnils</tabstop>
+  <tabstop>employeeListForwardButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
